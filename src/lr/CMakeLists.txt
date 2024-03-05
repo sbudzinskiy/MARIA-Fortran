@@ -1,0 +1,5 @@
+add_subdirectory(lr_la)
+add_subdirectory(lr_tsvd)
+add_subdirectory(lr_cross)
+add_subdirectory(lr_maxvol)
+add_subdirectory(lr_geom)

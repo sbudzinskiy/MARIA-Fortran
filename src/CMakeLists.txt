@@ -1,0 +1,5 @@
+add_subdirectory(common)
+add_subdirectory(la)
+add_subdirectory(access)
+add_subdirectory(lr)
+add_subdirectory(tt)

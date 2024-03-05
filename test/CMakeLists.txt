@@ -1,0 +1,10 @@
+set(MARIA_CTEST_LABEL_L maria_l)
+set(MARIA_CTEST_LABEL_I maria_i)
+set(MARIA_CTEST_LABEL_S maria_s)
+set(MARIA_CTEST_LABEL_D maria_d)
+
+add_subdirectory(common)
+add_subdirectory(la)
+add_subdirectory(lr)
+add_subdirectory(access)
+add_subdirectory(tt)

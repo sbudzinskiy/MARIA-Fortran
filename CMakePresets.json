@@ -1,0 +1,197 @@
+{
+    "version": 5,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 24,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "make",
+            "hidden": true,
+            "generator": "Unix Makefiles",
+            "cacheVariables": {
+                "MARIA_USE_TESTS": "ON",
+                "MARIA_TEST_SEED": "42"
+            }
+        },
+        {
+            "name": "gnu",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_Fortran_COMPILER": "gfortran",
+                "CMAKE_Fortran_FLAGS": "-ffree-line-length-none",
+                "MARIA_PRNG_IMPLEMENTATION": "maria_prng_builtin"
+            }
+        },
+        {
+            "name": "intel",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_Fortran_COMPILER": "ifort",
+                "MARIA_PRNG_IMPLEMENTATION": "maria_prng_mkl"
+            }
+        },
+        {
+            "name": "gnu-debug",
+            "inherits": ["gnu"],
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_Fortran_FLAGS_DEBUG": "-Og -g -Wall -Wno-aliasing -Wextra -Wpedantic -Warray-temporaries -Wuse-without-only -fcheck=all -fbacktrace"
+            }
+        },
+        {
+            "name": "gnu-release",
+            "inherits": ["gnu"],
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_Fortran_FLAGS_RELEASE": "-O3 -march=native"
+            }
+        },
+        {
+            "name": "intel-debug",
+            "inherits": ["intel"],
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_Fortran_FLAGS_DEBUG": "-O0 -g -warn all -check all"
+            }
+        },
+        {
+            "name": "intel-release",
+            "inherits": ["intel"],
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_Fortran_FLAGS_RELEASE": "-O3 -march=native"
+            }
+        },
+        {
+            "name": "mkl",
+            "hidden": true,
+            "cacheVariables": {
+                "MARIA_USE_MKL": "ON",
+                "MARIA_MKL_SEQ": "OFF",
+                "MKL_LINK": "-mkl=parallel"
+            } 
+        },
+        {
+            "name": "mklseq",
+            "hidden": true,
+            "cacheVariables": {
+                "MARIA_USE_MKL": "ON",
+                "MARIA_MKL_SEQ": "ON",
+                "MKL_LINK": "-mkl=sequential"
+            } 
+        },
+        {
+            "name": "lapack",
+            "hidden": true,
+            "cacheVariables": {
+                "MARIA_USE_MKL": "OFF",
+                "MARIA_MKL_SEQ": "OFF"
+            } 
+        },
+        {
+            "name": "gnu-debug-lapack",
+            "inherits": ["make", "gnu-debug", "lapack"],
+            "binaryDir": "${sourceDir}/build/${presetName}"
+        },
+        {
+            "name": "gnu-release-lapack",
+            "inherits": ["make", "gnu-release", "lapack"],
+            "binaryDir": "${sourceDir}/build/${presetName}"
+        },
+        {
+            "name": "intel-debug-mkl",
+            "inherits": ["make", "intel-debug", "mkl"],
+            "binaryDir": "${sourceDir}/build/${presetName}"
+        },
+        {
+            "name": "intel-debug-mklseq",
+            "inherits": ["make", "intel-debug", "mklseq"],
+            "binaryDir": "${sourceDir}/build/${presetName}"
+        },
+        {
+            "name": "intel-release-mkl",
+            "inherits": ["make", "intel-release", "mkl"],
+            "binaryDir": "${sourceDir}/build/${presetName}"
+        },
+        {
+            "name": "intel-release-mklseq",
+            "inherits": ["make", "intel-release", "mklseq"],
+            "binaryDir": "${sourceDir}/build/${presetName}"
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "gnu-debug-lapack",
+            "configurePreset": "gnu-debug-lapack"
+        },
+        {
+            "name": "gnu-release-lapack",
+            "configurePreset": "gnu-release-lapack"
+        },
+        {
+            "name": "intel-debug-mkl",
+            "configurePreset": "intel-debug-mkl"
+        },
+        {
+            "name": "intel-debug-mklseq",
+            "configurePreset": "intel-debug-mklseq"
+        },
+        {
+            "name": "intel-release-mkl",
+            "configurePreset": "intel-release-mkl"
+        },
+        {
+            "name": "intel-release-mklseq",
+            "configurePreset": "intel-release-mklseq"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "default",
+            "hidden": true,
+            "output": {
+                "outputOnFailure": true,
+                "shortProgress": true
+            },
+            "execution": {
+                "noTestsAction": "error"
+            }
+        },
+        {
+            "name": "gnu-debug-lapack",
+            "inherits": ["default"],
+            "configurePreset": "gnu-debug-lapack"
+        },
+        {
+            "name": "gnu-release-lapack",
+            "inherits": ["default"],
+            "configurePreset": "gnu-release-lapack"
+        },
+        {
+            "name": "intel-debug-mkl",
+            "inherits": ["default"],
+            "configurePreset": "intel-debug-mkl"
+        },
+        {
+            "name": "intel-debug-mklseq",
+            "inherits": ["default"],
+            "configurePreset": "intel-debug-mklseq"
+        },
+        {
+            "name": "intel-release-mkl",
+            "inherits": ["default"],
+            "configurePreset": "intel-release-mkl"
+        },
+        {
+            "name": "intel-release-mklseq",
+            "inherits": ["default"],
+            "configurePreset": "intel-release-mklseq"
+        }
+    ]
+}
